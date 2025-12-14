@@ -1,0 +1,2921 @@
+/* ========================================
+   GENERAL PAGE LAYOUT
+   ======================================== */
+.page-body {
+    margin: 0;
+    font-family: "Segoe UI", Arial, sans-serif;
+    background-color: #f5f5f5;
+}
+
+/* TOP BAR (Base) */
+.top-bar {
+    background-color: #000;
+    color: #fff;
+    height: 56px;
+    padding: 0 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    box-sizing: border-box;
+
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+}
+
+.course-title {
+    font-weight: bold;
+    font-size: 14px;
+}
+
+/* LOGIN / LOGOUT BUTTON BASE STYLE */
+.login-btn,
+.logout-btn {
+    padding: 6px 24px;
+    border: 2px solid #fff;
+    background-color: #fff;
+    color: #000;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 13px;
+    border-radius: 4px;
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.login-btn:hover,
+.logout-btn:hover {
+    background-color: #e0e0e0;
+}
+
+/* MAIN CONTENT */
+.main-container {
+    margin-top: 60px;
+    text-align: center;
+}
+
+/* Scanner wrapper (centers QR + status) */
+.scanner-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+/* big square center (QR box) */
+.qr-box {
+    width: 320px;
+    height: 240px;
+    margin: 0 auto 10px auto;
+    border: 4px solid #000;
+    background-color: #fff;
+    box-sizing: border-box;
+    position: relative;
+    overflow: hidden;
+    border-radius: 12px;
+}
+
+.qr-box::before {
+    content: "";
+    position: absolute;
+    left: 10px;
+    right: 10px;
+    height: 3px;
+    background: rgba(0, 0, 0, 0.4);
+    border-radius: 999px;
+    animation: scan-line 2s linear infinite;
+    pointer-events: none;
+}
+
+@keyframes scan-line {
+    0%   { top: 10px; }
+    50%  { top: calc(100% - 10px - 3px); }
+    100% { top: 10px; }
+}
+
+/* Status pill under QR */
+.scanner-status {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 14px;
+    background-color: #000;
+    color: #fff;
+    border-radius: 999px;
+    font-size: 12px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
+}
+
+.status-dot {
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    background-color: #ffc107;
+    animation: status-pulse 1.5s ease-in-out infinite;
+}
+
+.status-dot.status-success {
+    background-color: #00c851;
+}
+
+.status-dot.status-error {
+    background-color: #ff4444;
+}
+
+@keyframes status-pulse {
+    0%   { transform: scale(1); opacity: 1; }
+    50%  { transform: scale(1.4); opacity: 0.3; }
+    100% { transform: scale(1); opacity: 1; }
+}
+
+/* result box under QR */
+.scan-result {
+    margin: 20px auto 0 auto;
+    width: 60%;
+    min-height: 32px;
+    border: 1px solid #000;
+    background-color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+}
+
+/* horizontal line */
+.center-line {
+    width: 60%;
+    margin: 30px auto 0 auto;
+    border: none;
+    border-top: 4px solid #000;
+}
+
+/* FOOTER (base) */
+.footer {
+    text-align: center;
+    font-size: 12px;
+    margin-top: 20px;
+    padding-bottom: 20px;
+}
+
+/* AUTH CARD (Login/Register Page) */
+.auth-card {
+    width: 380px;
+    margin: 50px auto;
+    padding: 28px;
+    background: #ffffff;
+    border-radius: 12px;
+    border: 1px solid #ddd;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12);
+    text-align: left;
+}
+
+.auth-title {
+    font-size: 22px;
+    margin-bottom: 4px;
+    font-weight: 700;
+}
+
+.auth-subtitle {
+    font-size: 13px;
+    color: #777;
+    margin-bottom: 18px;
+}
+
+/* Tabs */
+.auth-tabs {
+    display: flex;
+    border-bottom: 1px solid #eee;
+    margin-bottom: 16px;
+}
+
+.auth-tab {
+    flex: 1;
+    padding: 10px 0;
+    border: none;
+    background: transparent;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    letter-spacing: 0.04em;
+    border-bottom: 2px solid transparent;
+}
+
+.auth-tab.active {
+    border-bottom: 2px solid #000;
+}
+
+/* Forms */
+.auth-form {
+    margin-top: 8px;
+}
+
+.auth-form-hidden {
+    display: none;
+}
+
+.form-group {
+    margin-bottom: 14px;
+}
+
+.form-group label {
+    font-size: 13px;
+    font-weight: 600;
+    margin-bottom: 4px;
+    display: block;
+    color: #222;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 10px 11px;
+    border-radius: 6px;
+    border: 1px solid #bbb;
+    font-size: 14px;
+    outline: none;
+    transition: border 0.2s;
+}
+
+.form-group input:focus {
+    border-color: #000;
+}
+
+/* PASSWORD INPUT + EYE ICON */
+.password-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.password-wrapper input[type="password"],
+.password-wrapper input[type="text"] {
+    padding-right: 2.6rem;
+}
+
+.password-toggle-btn {
+    position: absolute;
+    right: 0.75rem;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 1.1rem;
+    padding: 0;
+    line-height: 1;
+}
+
+.password-toggle-btn:focus {
+    outline: none;
+}
+
+/* Buttons */
+.primary-btn {
+    width: 100%;
+    padding: 10px;
+    margin-top: 6px;
+    border-radius: 6px;
+    border: none;
+    background-color: #000;
+    color: #fff;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s ease;
+}
+
+.primary-btn:hover {
+    background-color: #333;
+}
+
+/* FLASH MESSAGES */
+.flash-messages {
+    margin-bottom: 14px;
+}
+
+.flash-message {
+    padding: 8px 10px;
+    font-size: 13px;
+    border-radius: 6px;
+    margin-bottom: 8px;
+    border: 1px solid transparent;
+    transition: opacity 0.5s ease, height 0.5s ease, margin 0.5s ease, padding 0.5s ease;
+}
+
+.flash-success {
+    background-color: #E7F9E9;
+    border-color: #8CE18E;
+}
+
+.flash-error {
+    background-color: #FBE8E8;
+    border-color: #E58383;
+}
+
+.flash-info {
+    background-color: #EAF2FF;
+    border-color: #83A8E5;
+}
+
+/* Auto-hide animation */
+.flash-hide {
+    opacity: 0;
+    height: 0;
+    padding: 0;
+    margin: 0;
+    overflow: hidden;
+}
+
+/* spacing below top bar for flash on main container */
+.main-container .flash-messages {
+    margin-top: 20px;
+}
+
+
+/* DELETE CONFIRMATION MODAL */
+.modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.45);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 999;
+}
+
+.modal-overlay.show {
+    display: flex;
+}
+
+.modal-dialog {
+    background: #fff;
+    border-radius: 8px;
+    border: 4px solid #000;
+    padding: 20px 22px 18px 22px;
+    max-width: 380px;
+    width: 90%;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    box-sizing: border-box;
+}
+
+.modal-title {
+    margin: 0 0 8px 0;
+    font-weight: bold;
+    font-size: 18px;
+}
+
+.modal-message {
+    margin: 0 0 18px 0;
+    font-size: 14px;
+}
+
+.modal-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px;
+}
+
+
+
+/* ADD BUTTON (Student Management) */
+.admin-btn-primary {
+    display: inline-block;
+    padding: 8px 20px;
+    background-color: #000;
+    color: #fff !important;
+    border: 2px solid #000;
+    font-size: 13px;
+    font-weight: bold;
+    text-decoration: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: 0.2s ease;
+}
+
+.admin-btn-primary:hover {
+    background-color: #444;
+    color: #fff !important;
+}
+
+
+/* ========================================
+   ATTENDANCE PAGE (SIDEBAR + TABLE)
+   ======================================== */
+.sidebar {
+    width: 220px;
+    background-color: #f4f4f4;
+    padding-top: 20px;
+    position: fixed;
+    height: 100%;
+    box-sizing: border-box;
+    color: #fff;
+}
+
+.sidebar-item {
+    display: block;
+    padding: 12px 20px;
+    font-weight: bold;
+    color: #333;
+    text-decoration: none;
+    margin-bottom: 12px;
+}
+
+.sidebar-item:hover {
+    background-color: #e0e0e0;
+}
+
+.sidebar-item.active {
+    background-color: #ccc;
+}
+
+/* MAIN CONTENT (attendance layout) */
+.container {
+    display: flex;
+    margin-top: 60px;
+}
+
+.main-content {
+    margin-left: 240px;
+    padding: 80px 20px 20px 20px;
+    flex: 1;
+}
+
+/* Date Input Section */
+.date-section {
+    margin-bottom: 20px;
+}
+
+.date-section form {
+    display: flex;
+    align-items: center;
+}
+
+.date-section input[type="date"] {
+    padding: 8px;
+    font-size: 14px;
+    border-radius: 6px;
+    border: 1px solid #bbb;
+    outline: none;
+    margin-right: 10px;
+}
+
+.date-section button {
+    padding: 8px 20px;
+    font-size: 14px;
+    cursor: pointer;
+    border-radius: 6px;
+    background-color: #000;
+    color: #fff;
+    border: none;
+}
+
+.date-section button:hover {
+    background-color: #444;
+}
+
+/* Tables (generic) */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+table, th, td {
+    border: 1px solid #ccc;
+}
+
+th, td {
+    padding: 10px;
+    text-align: center;
+}
+
+th {
+    background-color: #f0f0f0;
+}
+
+table thead th {
+    font-weight: bold;
+    background-color: #f0f0f0;
+}
+
+table tbody td {
+    text-align: left;
+}
+
+/* Active item in left admin sidebar for Attendance */
+.admin-sidebar-item.admin-sidebar-item-active {
+    background-color: #000;
+    color: #fff;
+}
+
+/* Attendance controls */
+.attendance-controls {
+    display: flex;
+    justify-content: flex-start;
+    margin-bottom: 16px;
+}
+
+.attendance-controls form {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.attendance-date-label {
+    font-weight: bold;
+    font-size: 13px;
+    text-transform: uppercase;
+}
+
+.attendance-controls input[type="date"] {
+    padding: 8px 10px;
+    font-size: 14px;
+    border-radius: 6px;
+    border: 1px solid #bbb;
+    outline: none;
+}
+
+.attendance-controls input[type="date"]:focus {
+    border-color: #000;
+}
+
+/* Smaller GO button */
+.attendance-go-btn {
+    padding: 8px 20px;
+    font-size: 13px;
+}
+
+/* Attendance table styling */
+.attendance-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 6px;
+    font-size: 14px;
+}
+
+.attendance-table th,
+.attendance-table td {
+    border: 1px solid #ccc;
+    padding: 8px 10px;
+}
+
+.attendance-table thead th {
+    background-color: #f5f5f5;
+    font-weight: 700;
+    text-align: left;
+}
+
+.attendance-table tbody tr:nth-child(even) {
+    background-color: #fafafa;
+}
+
+.attendance-table tbody tr:hover {
+    background-color: #f0f0f0;
+}
+
+.attendance-table-wrapper {
+    width: 100%;
+    overflow-x: auto;
+}
+
+/* ========================================
+   QR PAGE (INDEX) – LAYOUT
+   ======================================== */
+.qr-layout {
+    display: flex;
+    gap: 24px;
+    align-items: flex-start;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+/* STUDENT INFO CARD (Right Side, 3-second popup) */
+.scan-student-card {
+    border: 1px solid #ccc;
+    padding: 12px;
+    border-radius: 6px;
+    min-width: 220px;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+}
+
+.scan-student-card.show {
+    opacity: 1;
+}
+
+.scan-photo-wrapper {
+    width: 90px;
+    height: 90px;
+    border-radius: 50%;
+    overflow: hidden;
+    margin: 0 auto 8px auto;
+    background: #eee;
+}
+
+.scan-photo-wrapper img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.scan-row {
+    display: flex;
+    justify-content: space-between;
+    font-size: 13px;
+    margin-bottom: 4px;
+}
+
+.scan-label {
+    font-weight: bold;
+}
+
+.scan-value {
+    font-weight: 500;
+    color: #333;
+    text-align: right;
+    flex: 1;
+    padding-left: 10px;
+}
+
+.scan-info-message {
+    font-size: 13px;
+    margin-top: 8px;
+}
+
+.scan-note {
+    font-size: 11px;
+    color: #666;
+    margin-top: 5px;
+}
+
+/* ========================================
+   SHARED BACKGROUND PARTICLES
+   ======================================== */
+.bg-particles {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 0;
+}
+
+.particle,
+.login-particle {
+    position: absolute;
+    background: rgba(255, 255, 255, 0.06);
+    border-radius: 50%;
+    animation: float 20s infinite alternate;
+    filter: blur(1px);
+}
+
+@keyframes float {
+    0%   { transform: translateY(0) translateX(0); opacity: 0.4; }
+    50%  { transform: translateY(-80px) translateX(40px); opacity: 0.9; }
+    100% { transform: translateY(-160px) translateX(-60px); opacity: 0.4; }
+}
+
+/* ========================================
+   INDEX PAGE OVERRIDES
+   ======================================== */
+
+/* Index page body */
+.page-body.index-page {
+    background: radial-gradient(120% 140% at 0% 0%, #111827 0%, #020617 40%, #111827 100%);
+    min-height: 100vh;
+    position: relative;
+    overflow-x: hidden;
+}
+
+/* Texture overlay */
+.page-body.index-page::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    background-image:
+        radial-gradient(circle at 10% 20%, rgba(148, 163, 253, 0.15) 0, transparent 50%),
+        radial-gradient(circle at 80% 0%, rgba(96, 165, 250, 0.18) 0, transparent 55%),
+        radial-gradient(circle at 80% 90%, rgba(244, 114, 182, 0.14) 0, transparent 50%);
+    z-index: 0;
+}
+
+/* Main container on index */
+.index-page .main-container {
+    max-width: 1100px;
+    margin: 80px auto 40px auto;
+    padding: 0 24px;
+    text-align: left;
+    position: relative;
+    z-index: 1;
+}
+
+/* TOP BAR OVERRIDE (index) */
+.index-page .top-bar {
+    background: rgba(15, 23, 42, 0.85);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border-bottom: 1px solid rgba(148, 163, 184, 0.1);
+    box-shadow: 0 10px 40px rgba(15, 23, 42, 0.65);
+}
+
+/* Brand area */
+.brand-section {
+    display: flex;
+    align-items: center;
+    gap: 0.9rem;
+}
+
+.brand-icon {
+    width: 42px;
+    height: 42px;
+    background: conic-gradient(from 210deg, #6366f1, #22c55e, #eab308, #6366f1);
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #0b1120;
+    font-weight: 800;
+    font-size: 1.25rem;
+    box-shadow: 0 0 0 1px rgba(15, 23, 42, 0.6),
+                0 10px 25px rgba(15, 23, 42, 0.6);
+}
+
+.course-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.index-page .course-title {
+    font-weight: 700;
+    font-size: 0.95rem;
+    color: #e5e7eb;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.course-subtitle {
+    font-size: 0.8rem;
+    color: #9ca3af;
+    margin-top: 2px;
+}
+
+/* Login button override (index) */
+.index-page .login-btn {
+    padding: 0.55rem 1.7rem;
+    border-radius: 999px;
+    border: 1px solid rgba(148, 163, 253, 0.4);
+    background: radial-gradient(circle at 0 0, #6366f1, #4f46e5);
+    color: #f9fafb;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.8rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    box-shadow: 0 10px 25px rgba(79, 70, 229, 0.6);
+    transition:
+        transform 0.18s ease,
+        box-shadow 0.18s ease,
+        background 0.18s ease,
+        border-color 0.18s ease;
+}
+
+.index-page .login-btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 14px 32px rgba(79, 70, 229, 0.8);
+    background: radial-gradient(circle at 0 0, #818cf8, #4f46e5);
+    border-color: rgba(191, 219, 254, 0.7);
+}
+
+/* SCANNER HEADER / HERO TITLE */
+.scanner-header {
+    margin-bottom: 1.8rem;
+}
+
+.scanner-header h1 {
+    font-size: clamp(2.1rem, 3vw, 2.6rem);
+    color: #f9fafb;
+    margin-bottom: 0.3rem;
+    font-weight: 800;
+    letter-spacing: 0.03em;
+}
+
+.scanner-header p {
+    color: #9ca3af;
+    font-size: 0.95rem;
+    max-width: 480px;
+}
+
+.scanner-header h1::after {
+    content: "";
+    display: block;
+    width: 68px;
+    height: 3px;
+    margin-top: 10px;
+    border-radius: 999px;
+    background: linear-gradient(90deg, #22c55e, #eab308, #6366f1);
+}
+
+/* FLASH MESSAGES (floating card at top-right) */
+.index-page .flash-messages {
+    position: fixed;
+    top: 80px;
+    right: 2rem;
+    z-index: 1200;
+    max-width: 360px;
+}
+
+.index-page .flash-message {
+    background: rgba(15, 23, 42, 0.95);
+    padding: 0.9rem 1.2rem;
+    border-radius: 14px;
+    margin-bottom: 0.6rem;
+    box-shadow: 0 18px 40px rgba(15, 23, 42, 0.85);
+    border: 1px solid rgba(148, 163, 184, 0.35);
+    color: #e5e7eb;
+    font-size: 0.85rem;
+    display: flex;
+    align-items: flex-start;
+    gap: 0.55rem;
+    animation: slideInRight 0.35s ease;
+}
+
+.index-page .flash-success {
+    border-left: 3px solid #22c55e;
+}
+
+.index-page .flash-error {
+    border-left: 3px solid #ef4444;
+}
+
+.index-page .flash-info {
+    border-left: 3px solid #38bdf8;
+}
+
+/* SPECIAL STYLE FOR LOGOUT SUCCESS */
+.index-page .flash-message.logout-success {
+    background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
+    color: #f0fdf4;
+    padding: 1.2rem 1.5rem;
+    border-radius: 18px;
+    font-size: 1rem;
+    font-weight: 700;
+    border: none;
+    box-shadow:
+        0 14px 40px rgba(34, 197, 94, 0.45),
+        0 0 0 2px rgba(34, 197, 94, 0.6);
+    letter-spacing: 0.03em;
+    animation: slideInRight 0.35s ease, popupPulse 1.8s ease-out;
+}
+
+@keyframes popupPulse {
+    0%   { transform: translateX(0) scale(1); }
+    50%  { transform: translateX(0) scale(1.04); }
+    100% { transform: translateX(0) scale(1); }
+}
+
+@keyframes slideInRight {
+    from { opacity: 0; transform: translateX(80px); }
+    to   { opacity: 1; transform: translateX(0); }
+}
+
+/* SCANNER CARD */
+.scanner-card {
+    background: radial-gradient(circle at 0 0, rgba(79, 70, 229, 0.2), rgba(15, 23, 42, 0.98));
+    border-radius: 24px;
+    padding: 2.8rem 1.8rem 1.6rem;
+    max-width: 520px;
+    margin: 0 auto;
+    box-shadow:
+        0 26px 60px rgba(15, 23, 42, 0.95),
+        0 0 0 1px rgba(148, 163, 184, 0.35);
+    position: relative;
+    overflow: hidden;
+}
+
+.scanner-card::before {
+    content: "Live Scanner";
+    position: absolute;
+    top: 14px;
+    right: 18px;
+    padding: 4px 12px;
+    border-radius: 999px;
+    font-size: 0.7rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: #e5e7eb;
+    background: linear-gradient(120deg, #22c55e, #eab308, #6366f1);
+    box-shadow: 0 10px 25px rgba(15, 23, 42, 0.9);
+}
+
+/* Enhanced QR Box for index page */
+.index-page .qr-box {
+    width: 100%;
+    max-width: 420px;
+    height: 300px;
+    margin: 12px auto 1.6rem auto;
+    border-radius: 20px;
+    overflow: hidden;
+    position: relative;
+    background: radial-gradient(circle at 50% 0, #020617, #020617 35%, #030712 100%);
+    border: 1px solid rgba(148, 163, 184, 0.55);
+    box-shadow:
+        inset 0 0 40px rgba(15, 23, 42, 0.9),
+        0 18px 40px rgba(15, 23, 42, 0.85);
+}
+
+/* Remove old scan line pseudo-element from base style on index */
+.index-page .qr-box::before {
+    content: none;
+}
+
+/* html5-qrcode container */
+#qr-reader {
+    width: 100%;
+    height: 100%;
+}
+
+/* scanning overlay */
+.scan-overlay {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    border-radius: 20px;
+}
+
+/* animated scan line */
+.scan-line {
+    position: absolute;
+    left: 12%;
+    right: 12%;
+    height: 3px;
+    background: linear-gradient(
+        90deg,
+        transparent 0%,
+        #22c55e 15%,
+        #eab308 50%,
+        #6366f1 85%,
+        transparent 100%
+    );
+    box-shadow: 0 0 24px rgba(94, 234, 212, 0.8);
+    animation: scan 2.6s linear infinite;
+}
+
+@keyframes scan {
+    0%   { top: 12%; opacity: 0; }
+    10%  { opacity: 1; }
+    90%  { top: 88%; opacity: 1; }
+    100% { top: 88%; opacity: 0; }
+}
+
+/* corner brackets */
+.corner-bracket {
+    position: absolute;
+    width: 34px;
+    height: 34px;
+    border: 3px solid rgba(148, 163, 253, 0.9);
+}
+
+.corner-bracket.top-left {
+    top: 16px;
+    left: 16px;
+    border-right: none;
+    border-bottom: none;
+    border-radius: 14px 0 0 0;
+}
+
+.corner-bracket.top-right {
+    top: 16px;
+    right: 16px;
+    border-left: none;
+    border-bottom: none;
+    border-radius: 0 14px 0 0;
+}
+
+.corner-bracket.bottom-left {
+    bottom: 16px;
+    left: 16px;
+    border-right: none;
+    border-top: none;
+    border-radius: 0 0 0 14px;
+}
+
+.corner-bracket.bottom-right {
+    bottom: 16px;
+    right: 16px;
+    border-left: none;
+    border-top: none;
+    border-radius: 0 0 14px 0;
+}
+
+/* status row under qr */
+.status-section {
+    display: flex;
+    justify-content: center;
+}
+
+/* more premium status pill */
+.index-page .scanner-status {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0.7rem 1.4rem;
+    background: radial-gradient(circle at 0 0, #020617, #020617 60%, #030712 100%);
+    border-radius: 999px;
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: #e5e7eb;
+    box-shadow:
+        0 16px 40px rgba(15, 23, 42, 0.9),
+        0 0 0 1px rgba(148, 163, 184, 0.45);
+}
+
+.index-page .status-dot {
+    width: 11px;
+    height: 11px;
+    border-radius: 999px;
+    background: #eab308;
+    box-shadow: 0 0 0 0 rgba(234, 179, 8, 0.9);
+    animation: pulse-status 1.8s ease-out infinite;
+}
+
+@keyframes pulse-status {
+    0%   { box-shadow: 0 0 0 0 rgba(234, 179, 8, 0.9); transform: scale(1); }
+    70%  { box-shadow: 0 0 0 12px rgba(234, 179, 8, 0); transform: scale(1.08); }
+    100% { box-shadow: 0 0 0 0 rgba(234, 179, 8, 0); transform: scale(1); }
+}
+
+.index-page .status-dot.status-success {
+    background: #22c55e;
+}
+
+.index-page .status-dot.status-error {
+    background: #ef4444;
+}
+
+/* INFO CARDS */
+.info-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+    gap: 1.4rem;
+    margin-top: 2.3rem;
+}
+
+.info-card {
+    background: radial-gradient(circle at 0 0, rgba(30, 64, 175, 0.65), rgba(15, 23, 42, 0.98));
+    padding: 1.2rem 1.3rem 1.25rem;
+    border-radius: 18px;
+    box-shadow:
+        0 18px 40px rgba(15, 23, 42, 0.9),
+        0 0 0 1px rgba(148, 163, 184, 0.3);
+    color: #e5e7eb;
+    display: flex;
+    flex-direction: column;
+    gap: 0.45rem;
+    position: relative;
+    overflow: hidden;
+    isolation: isolate;
+    transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+.info-card::after {
+    content: "";
+    position: absolute;
+    inset: -20%;
+    opacity: 0;
+    background: radial-gradient(circle at 0 0, rgba(248, 250, 252, 0.08), transparent 55%);
+    z-index: -1;
+    transition: opacity 0.18s ease;
+}
+
+.info-card:hover {
+    transform: translateY(-4px);
+    box-shadow:
+        0 24px 56px rgba(15, 23, 42, 0.95),
+        0 0 0 1px rgba(191, 219, 254, 0.65);
+}
+
+.info-card:hover::after {
+    opacity: 1;
+}
+
+.info-card-icon {
+    width: 38px;
+    height: 38px;
+    border-radius: 14px;
+    background: radial-gradient(circle at 0 0, #22c55e, #22c55e 40%, #16a34a 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.4rem;
+    margin-bottom: 0.1rem;
+}
+
+.info-card:nth-child(2) .info-card-icon {
+    background: radial-gradient(circle at 0 0, #f97316, #ea580c);
+}
+
+.info-card:nth-child(3) .info-card-icon {
+    background: radial-gradient(circle at 0 0, #6366f1, #4f46e5);
+}
+
+.info-card h3 {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: #f9fafb;
+}
+
+.info-card p {
+    font-size: 0.82rem;
+    color: #cbd5f5;
+    line-height: 1.6;
+}
+
+/* INDEX MODALS */
+.index-page .modal-overlay {
+    background: rgba(15, 23, 42, 0.85);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    animation: fadeInModal 0.25s ease;
+}
+
+@keyframes fadeInModal {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+
+.index-page .modal-dialog {
+    background: radial-gradient(circle at 0 0, rgba(30, 64, 175, 0.5), rgba(15, 23, 42, 1));
+    border-radius: 22px;
+    padding: 2.1rem 2.2rem 1.9rem;
+    max-width: 460px;
+    box-shadow:
+        0 30px 70px rgba(15, 23, 42, 0.98),
+        0 0 0 1px rgba(148, 163, 184, 0.4);
+    border: none;
+    color: #e5e7eb;
+    animation: slideUpModal 0.28s ease;
+}
+
+@keyframes slideUpModal {
+    from { opacity: 0; transform: translateY(40px) scale(0.98); }
+    to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.index-page .modal-title {
+    font-size: 1.35rem;
+    font-weight: 700;
+    margin-bottom: 1.3rem;
+    color: #f9fafb;
+}
+
+/* success modal photo */
+.index-page .scan-photo-wrapper {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    overflow: hidden;
+    margin: 0 auto 1.4rem auto;
+    border: 3px solid rgba(129, 140, 248, 0.9);
+    box-shadow: 0 18px 40px rgba(15, 23, 42, 0.95);
+    background: #020617;
+}
+
+.index-page .scan-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.6rem 0;
+    border-bottom: 1px solid rgba(148, 163, 184, 0.4);
+}
+
+.index-page .scan-label {
+    font-weight: 600;
+    color: #9ca3af;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.11em;
+}
+
+.index-page .scan-value {
+    font-weight: 600;
+    color: #f9fafb;
+    font-size: 0.9rem;
+}
+
+.index-page .scan-note {
+    text-align: center;
+    color: #9ca3af;
+    font-size: 0.8rem;
+    margin-top: 1.4rem;
+    font-style: italic;
+}
+
+/* Index footer */
+.index-page .footer {
+    text-align: center;
+    color: #6b7280;
+    font-size: 0.78rem;
+    padding: 2rem 0 2.4rem;
+    margin-top: 3rem;
+}
+
+/* INDEX RESPONSIVE */
+@media (max-width: 768px) {
+    .index-page .main-container {
+        margin-top: 80px;
+        padding: 0 18px 24px;
+    }
+
+    .scanner-header h1 {
+        font-size: 1.7rem;
+    }
+
+    .scanner-card {
+        padding: 1.5rem 1.4rem 1.4rem;
+    }
+
+    .index-page .qr-box {
+        height: 250px;
+    }
+
+    .index-page .flash-messages {
+        right: 1rem;
+        left: 1rem;
+        top: 76px;
+    }
+
+    .info-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* ========================================
+   LOGIN PAGE STYLES
+   ======================================== */
+
+.page-body.login-page {
+    background: radial-gradient(120% 140% at 0% 0%, #111827 0%, #020617 40%, #111827 100%);
+    min-height: 100vh;
+    position: relative;
+    overflow-x: hidden;
+}
+
+/* Texture overlay */
+.page-body.login-page::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    background-image:
+        radial-gradient(circle at 10% 20%, rgba(148, 163, 253, 0.15) 0, transparent 50%),
+        radial-gradient(circle at 80% 0%, rgba(96, 165, 250, 0.18) 0, transparent 55%),
+        radial-gradient(circle at 80% 90%, rgba(244, 114, 182, 0.14) 0, transparent 50%);
+    z-index: 0;
+}
+
+/* Top bar for login page */
+.login-page .top-bar {
+    background: rgba(15, 23, 42, 0.85);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border-bottom: 1px solid rgba(148, 163, 184, 0.1);
+    box-shadow: 0 10px 40px rgba(15, 23, 42, 0.65);
+}
+
+.login-page .course-title {
+    font-weight: 700;
+    font-size: 0.95rem;
+    color: #e5e7eb;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.login-page .login-btn {
+    padding: 0.55rem 1.7rem;
+    border-radius: 999px;
+    border: 1px solid rgba(148, 163, 253, 0.4);
+    background: radial-gradient(circle at 0 0, #6366f1, #4f46e5);
+    color: #f9fafb;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.8rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    box-shadow: 0 10px 25px rgba(79, 70, 229, 0.6);
+    transition: transform 0.18s ease, box-shadow 0.18s ease;
+}
+
+.login-page .login-btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 14px 32px rgba(79, 70, 229, 0.8);
+    background: radial-gradient(circle at 0 0, #818cf8, #4f46e5);
+    border-color: rgba(191, 219, 254, 0.7);
+}
+
+/* Main container */
+.login-page .main-container {
+    margin-top: 60px;
+    padding: 3rem 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: calc(100vh - 60px - 80px);
+    position: relative;
+    z-index: 1;
+}
+
+/* Enhanced auth card */
+.login-page .auth-card {
+    width: 440px;
+    max-width: 90%;
+    margin: 0 auto;
+    padding: 2.5rem 2.2rem;
+    background: radial-gradient(circle at 0 0, rgba(79, 70, 229, 0.2), rgba(15, 23, 42, 0.98));
+    border-radius: 24px;
+    border: 1px solid rgba(148, 163, 184, 0.35);
+    box-shadow: 
+        0 26px 60px rgba(15, 23, 42, 0.95),
+        0 0 0 1px rgba(148, 163, 184, 0.35);
+    text-align: left;
+    position: relative;
+    overflow: hidden;
+    animation: fadeInUp 0.6s ease;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Decorative accent */
+.login-page .auth-card::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, #22c55e, #eab308, #6366f1);
+    border-radius: 24px 24px 0 0;
+}
+
+.login-page .auth-title {
+    font-size: 1.75rem;
+    margin-bottom: 0.4rem;
+    font-weight: 700;
+    color: #f9fafb;
+    letter-spacing: 0.02em;
+}
+
+.login-page .auth-subtitle {
+    font-size: 0.9rem;
+    color: #9ca3af;
+    margin-bottom: 1.8rem;
+    line-height: 1.5;
+}
+
+/* Tabs */
+.login-page .auth-tabs {
+    display: flex;
+    border-bottom: 1px solid rgba(148, 163, 184, 0.2);
+    margin-bottom: 1.8rem;
+    gap: 0.5rem;
+}
+
+.login-page .auth-tab {
+    flex: 1;
+    padding: 0.75rem 0;
+    border: none;
+    background: transparent;
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    letter-spacing: 0.04em;
+    color: #9ca3af;
+    border-bottom: 2px solid transparent;
+    transition: all 0.2s ease;
+}
+
+.login-page .auth-tab:hover {
+    color: #e5e7eb;
+}
+
+.login-page .auth-tab.active {
+    border-bottom: 2px solid #6366f1;
+    color: #f9fafb;
+}
+
+/* Form styling */
+.login-page .auth-form {
+    margin-top: 1rem;
+}
+
+.login-page .form-group {
+    margin-bottom: 1.3rem;
+}
+
+.login-page .form-group label {
+    font-size: 0.85rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    display: block;
+    color: #e5e7eb;
+    letter-spacing: 0.02em;
+}
+
+.login-page .form-group input {
+    width: 100%;
+    padding: 0.85rem 1rem;
+    border-radius: 10px;
+    border: 1px solid rgba(148, 163, 184, 0.3);
+    font-size: 0.95rem;
+    outline: none;
+    transition: all 0.2s ease;
+    background: rgba(15, 23, 42, 0.6);
+    color: #f9fafb;
+}
+
+.login-page .form-group input::placeholder {
+    color: #6b7280;
+}
+
+.login-page .form-group input:focus {
+    border-color: #6366f1;
+    background: rgba(15, 23, 42, 0.8);
+    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+}
+
+/* Password wrapper */
+.login-page .password-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.login-page .password-wrapper input {
+    padding-right: 3rem;
+}
+
+.login-page .password-toggle-btn {
+    position: absolute;
+    right: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 1.2rem;
+    padding: 0;
+    line-height: 1;
+    color: #9ca3af;
+    transition: color 0.2s ease;
+}
+
+.login-page .password-toggle-btn:hover {
+    color: #e5e7eb;
+}
+
+/* Enhanced primary button */
+.login-page .primary-btn {
+    width: 100%;
+    padding: 0.9rem;
+    margin-top: 1rem;
+    border-radius: 10px;
+    border: none;
+    background: radial-gradient(circle at 0 0, #6366f1, #4f46e5);
+    color: #f9fafb;
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: 0 10px 25px rgba(79, 70, 229, 0.4);
+    letter-spacing: 0.03em;
+}
+
+.login-page .primary-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 14px 32px rgba(79, 70, 229, 0.6);
+    background: radial-gradient(circle at 0 0, #818cf8, #4f46e5);
+}
+
+.login-page .primary-btn:active {
+    transform: translateY(0);
+}
+
+/* Flash messages for login page */
+.login-page .flash-messages {
+    margin-bottom: 1.5rem;
+}
+
+.login-page .flash-message {
+    padding: 0.85rem 1rem;
+    font-size: 0.85rem;
+    border-radius: 10px;
+    margin-bottom: 0.8rem;
+    border: 1px solid transparent;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    animation: slideInDown 0.4s ease;
+}
+
+@keyframes slideInDown {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.login-page .flash-success {
+    background-color: rgba(34, 197, 94, 0.15);
+    border-color: rgba(34, 197, 94, 0.4);
+    color: #86efac;
+}
+
+.login-page .flash-error {
+    background-color: rgba(239, 68, 68, 0.15);
+    border-color: rgba(239, 68, 68, 0.4);
+    color: #fca5a5;
+}
+
+.login-page .flash-info {
+    background-color: rgba(96, 165, 250, 0.15);
+    border-color: rgba(96, 165, 250, 0.4);
+    color: #93c5fd;
+}
+
+/* Footer for login page */
+.login-page .footer {
+    text-align: center;
+    color: #6b7280;
+    font-size: 0.78rem;
+    padding: 1.5rem 0;
+    margin-top: 2rem;
+}
+
+/* Login responsive */
+@media (max-width: 768px) {
+    .login-page .auth-card {
+        width: 100%;
+        padding: 2rem 1.5rem;
+    }
+
+    .login-page .auth-title {
+        font-size: 1.5rem;
+    }
+
+    .login-page .main-container {
+        padding: 2rem 1rem;
+    }
+}
+
+/* ========================================
+   ENHANCED ADMIN PAGE STYLES
+   ======================================== */
+
+.page-body.admin-page {
+    background: radial-gradient(120% 140% at 0% 0%, #111827 0%, #020617 40%, #020617 100%);
+    min-height: 100vh;
+    position: relative;
+    overflow-x: hidden;
+    color: #e5e7eb;
+    font-size: 16px;
+}
+
+/* Texture overlay */
+.page-body.admin-page::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    background-image:
+        radial-gradient(circle at 10% 20%, rgba(148, 163, 253, 0.14) 0, transparent 50%),
+        radial-gradient(circle at 80% 0%, rgba(96, 165, 250, 0.18) 0, transparent 55%),
+        radial-gradient(circle at 80% 90%, rgba(244, 114, 182, 0.16) 0, transparent 50%);
+    z-index: 0;
+}
+
+/* Top bar for admin page */
+.admin-page .top-bar {
+    background: rgba(15, 23, 42, 0.95);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border-bottom: 1px solid rgba(148, 163, 184, 0.18);
+    box-shadow: 0 10px 40px rgba(15, 23, 42, 0.75);
+}
+
+.admin-page .course-title {
+    font-weight: 700;
+    font-size: 0.95rem;
+    color: #f9fafb;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+}
+
+/* Admin layout container */
+.admin-page .admin-layout {
+    display: block;
+    min-height: calc(100vh - 56px);
+    margin-top: 56px;
+    position: relative;
+    z-index: 1;
+}
+
+/* Enhanced sidebar (fixed) */
+.admin-page .admin-sidebar {
+    width: 260px;
+    background: rgba(15, 23, 42, 0.98);
+    backdrop-filter: blur(14px);
+    border-right: 1px solid rgba(148, 163, 184, 0.25);
+    display: flex;
+    flex-direction: column;
+    padding-top: 2rem;
+    box-shadow: 4px 0 24px rgba(15, 23, 42, 0.55);
+
+    position: fixed;
+    top: 56px;
+    bottom: 0;
+    left: 0;
+    z-index: 900;
+}
+
+.admin-page .admin-sidebar-item {
+    padding: 1rem 1.6rem;
+    text-align: left;
+    font-weight: 600;
+    font-size: 0.98rem;
+    color: #e5e7eb;
+    text-decoration: none;
+    cursor: pointer;
+    transition: all 0.18s ease;
+    border-left: 4px solid transparent;
+    letter-spacing: 0.04em;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.admin-page .admin-sidebar-item .sidebar-icon {
+    font-size: 1.25rem;
+    width: 24px;
+    text-align: center;
+}
+
+.admin-page .admin-sidebar-item:hover {
+    background: rgba(99, 102, 241, 0.18);
+    color: #f9fafb;
+    border-left-color: rgba(129, 140, 248, 0.9);
+}
+
+.admin-page .admin-sidebar-item.active {
+    background: rgba(79, 70, 229, 0.35);
+    color: #ffffff;
+    border-left-color: #6366f1;
+    font-weight: 700;
+}
+
+/* Main content area */
+.admin-page .admin-main {
+    flex: 1;
+    padding: 1.0rem 2.2rem;
+    font-size: 0.95rem;
+    line-height: 1.6;
+
+    margin-left: 260px;
+    /* IMPORTANT: allow inner panel scroll to handle sticky header correctly */
+    overflow-y: visible;
+}
+
+/* Section title */
+.admin-page .admin-section-title {
+    text-align: left;
+    font-weight: 700;
+    font-size: 1.8rem;
+    margin-bottom: 2rem;
+    color: #f9fafb;
+    letter-spacing: 0.03em;
+    position: relative;
+    padding-bottom: 1rem;
+}
+
+.admin-page .admin-section-title::after {
+    content: "";
+    display: block;
+    width: 80px;
+    height: 4px;
+    margin-top: 0.8rem;
+    border-radius: 999px;
+    background: linear-gradient(90deg, #22c55e, #eab308, #6366f1);
+    box-shadow: 0 2px 8px rgba(99, 102, 241, 0.4);
+}
+
+/* Stats Cards */
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 0.8rem;
+    margin-bottom: 1rem;
+    animation: slideInDown 0.5s ease;
+}
+
+.stat-card {
+    background: radial-gradient(circle at 0 0, rgba(79, 70, 229, 0.15), rgba(15, 23, 42, 0.95));
+    border: 1px solid rgba(148, 163, 184, 0.3);
+    border-radius: 12px;
+    padding: 0.8rem 1rem;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.25s ease;
+    box-shadow: 0 3px 10px rgba(15, 23, 42, 0.5);
+}
+
+.stat-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(79, 70, 229, 0.4);
+    border-color: rgba(129, 140, 248, 0.6);
+}
+
+.stat-card::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, #22c55e, #eab308, #6366f1);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.stat-card:hover::before {
+    opacity: 1;
+}
+
+.stat-icon {
+    width: 32px;
+    height: 32px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.1rem;
+    margin-bottom: 0.4rem;
+    background: radial-gradient(circle at 0 0, #6366f1, #4f46e5);
+    box-shadow: 0 3px 10px rgba(79, 70, 229, 0.4);
+}
+
+.stat-card:nth-child(2) .stat-icon {
+    background: radial-gradient(circle at 0 0, #22c55e, #16a34a);
+    box-shadow: 0 3px 10px rgba(34, 197, 94, 0.4);
+}
+
+.stat-card:nth-child(3) .stat-icon {
+    background: radial-gradient(circle at 0 0, #f97316, #ea580c);
+    box-shadow: 0 3px 10px rgba(249, 115, 22, 0.4);
+}
+
+.stat-label {
+    font-size: 0.65rem;
+    color: #9ca3af;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-weight: 600;
+    margin-bottom: 0.2rem;
+}
+
+.stat-value {
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: #f9fafb;
+    line-height: 1;
+}
+
+/* Stats inline container (used in Users List panel header) */
+.stats-inline {
+    position: static;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    margin: 0;
+}
+
+/* Smaller inline card variation */
+.stat-card-inline {
+    padding: 0.5rem 0.9rem;
+    border-radius: 10px;
+    box-shadow: 0 3px 10px rgba(15, 23, 42, 0.5);
+    min-width: 120px;
+}
+
+.stat-card-inline .stat-icon {
+    width: 26px;
+    height: 26px;
+    font-size: 1rem;
+    margin-bottom: 0.25rem;
+}
+
+.stat-card-inline .stat-label {
+    font-size: 0.6rem;
+    margin-bottom: 0.1rem;
+}
+
+.stat-card-inline .stat-value {
+    font-size: 1.1rem;
+}
+
+/* Flash messages on admin page */
+.admin-page .flash-messages {
+    margin-bottom: 1.4rem;
+}
+
+.admin-page .flash-message {
+    padding: 0.95rem 1.15rem;
+    font-size: 0.9rem;
+    border-radius: 10px;
+    margin-bottom: 0.7rem;
+    border: 1px solid transparent;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    animation: slideInDown 0.35s ease;
+    background: rgba(15, 23, 42, 0.9);
+}
+
+.admin-page .flash-success {
+    background-color: rgba(22, 163, 74, 0.28);
+    border-color: rgba(134, 239, 172, 0.8);
+    color: #bbf7d0;
+}
+
+.admin-page .flash-error {
+    background-color: rgba(220, 38, 38, 0.3);
+    border-color: rgba(248, 113, 113, 0.85);
+    color: #fecaca;
+}
+
+.admin-page .flash-info {
+    background-color: rgba(37, 99, 235, 0.3);
+    border-color: rgba(129, 178, 255, 0.85);
+    color: #bfdbfe;
+}
+
+/* Grid layout */
+.admin-page .admin-grid {
+    display: flex;
+    gap: 1.8rem;
+    align-items: flex-start;
+}
+
+/* Enhanced panels */
+.admin-page .admin-panel {
+    background: radial-gradient(circle at 0 0, rgba(79, 70, 229, 0.16), rgba(15, 23, 42, 0.98));
+    border: 1px solid rgba(148, 163, 184, 0.4);
+    border-radius: 18px;
+    padding: 2rem;
+    box-sizing: border-box;
+    box-shadow:
+        0 20px 50px rgba(15, 23, 42, 0.95),
+        0 0 0 1px rgba(99, 102, 241, 0.1);
+    position: relative;
+    transition: all 0.3s ease;
+}
+
+.admin-page .admin-panel:hover {
+    box-shadow:
+        0 24px 60px rgba(15, 23, 42, 0.95),
+        0 0 0 1px rgba(99, 102, 241, 0.3);
+}
+
+.admin-page .admin-user-form {
+    width: 35%;
+    min-width: 320px;
+}
+
+.admin-page .admin-user-table {
+    width: 65%;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    /* NOTE: no overflow here, scroll is inside .admin-table-wrapper */
+}
+
+/* Panel title with icon support */
+.admin-page .admin-panel-title {
+    font-weight: 700;
+    font-size: 1.15rem;
+    margin-bottom: 1.5rem;
+    color: #f9fafb;
+    padding-bottom: 0.8rem;
+    border-bottom: 2px solid rgba(148, 163, 184, 0.25);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+}
+
+/* Users List header: title + stats in one row */
+.admin-page .admin-user-table .admin-panel-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.2rem;
+    padding-bottom: 0.75rem;
+    margin-bottom: 1rem;
+    border-bottom: 2px solid rgba(148, 163, 184, 0.25);
+}
+
+.admin-page .admin-user-table .admin-panel-title {
+    margin-bottom: 0;
+    padding-bottom: 0;
+    border-bottom: none;
+}
+
+/* Form labels & inputs */
+.admin-page .admin-form-label {
+    display: block;
+    font-weight: 600;
+    font-size: 0.86rem;
+    margin-top: 1rem;
+    margin-bottom: 0.45rem;
+    color: #e5e7eb;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+}
+
+.admin-page .admin-form-input {
+    margin-top: 0;
+    margin-bottom: 1rem;
+    padding: 0.95rem 1.1rem;
+    border-radius: 10px;
+    border: 1px solid rgba(148, 163, 184, 0.45);
+    background: rgba(15, 23, 42, 0.85);
+    color: #f9fafb;
+    font-size: 0.95rem;
+    transition: all 0.2s ease;
+}
+
+.admin-page .admin-form-input:focus {
+    border-color: #6366f1;
+    background: rgba(15, 23, 42, 0.96);
+    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.25);
+    outline: none;
+}
+
+.admin-page .admin-form-input::placeholder {
+    color: #9ca3af;
+}
+
+/* Password wrapper in admin form */
+.admin-page .password-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.admin-page .password-wrapper input {
+    padding-right: 3rem;
+}
+
+.admin-page .password-toggle-btn {
+    position: absolute;
+    right: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 1.2rem;
+    color: #9ca3af;
+    transition: all 0.2s ease;
+}
+
+.admin-page .password-toggle-btn:hover {
+    color: #e5e7eb;
+    transform: translateY(-50%) scale(1.1);
+}
+
+/* Form buttons */
+.admin-page .admin-form-buttons {
+    margin-top: 2rem;
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+}
+
+.admin-page .admin-btn-outline {
+    padding: 0.85rem 1.8rem;
+    border: 1px solid rgba(148, 163, 184, 0.6);
+    background: transparent;
+    color: #e5e7eb;
+    font-weight: 600;
+    font-size: 0.88rem;
+    text-decoration: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+}
+
+.admin-page .admin-btn-outline:hover {
+    background: rgba(148, 163, 184, 0.2);
+    border-color: rgba(191, 219, 254, 0.85);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(148, 163, 184, 0.3);
+}
+
+.admin-page .admin-btn-primary {
+    padding: 0.85rem 1.8rem;
+    background: radial-gradient(circle at 0 0, #6366f1, #4f46e5);
+    color: #f9fafb;
+    border: none;
+    font-weight: 600;
+    font-size: 0.9rem;
+    text-decoration: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: 0 10px 26px rgba(79, 70, 229, 0.6);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.admin-page .admin-btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 14px 32px rgba(79, 70, 229, 0.78);
+    background: radial-gradient(circle at 0 0, #818cf8, #4f46e5);
+}
+
+.admin-page .admin-btn-small {
+    padding: 0.6rem 1.2rem;
+    font-size: 0.8rem;
+    margin-right: 0.5rem;
+}
+
+/* ===== TABLE WRAPPER + STICKY HEADER ===== */
+
+/* Table wrapper inside Users List panel */
+.admin-table-wrapper {
+    flex: 1;
+    overflow-y: auto;
+    overflow-x: auto;
+    max-height: calc(100vh - 360px);
+    border-radius: 12px;
+    border: 1px solid rgba(15, 23, 42, 0.9);
+}
+
+/* thead with this class must be inside the table */
+.admin-table-head {
+    position: sticky;
+    top: 0;
+    z-index: 20;
+}
+
+/* Make the actual header cells sticky */
+.admin-page .admin-table-head th {
+    background: #020617;
+    color: #f9fafb;
+    font-weight: 700;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    padding: 1.1rem 1rem;
+    border-bottom: 2px solid rgba(99, 102, 241, 0.8);
+
+    position: sticky !important;
+    top: 0 !important;
+    z-index: 20 !important;
+    box-shadow: 0 4px 8px rgba(15, 23, 42, 0.95);
+}
+
+/* Scrollbar (only on table wrapper) */
+.admin-table-wrapper::-webkit-scrollbar {
+    width: 10px;
+    height: 8px;
+}
+
+.admin-table-wrapper::-webkit-scrollbar-track {
+    background: rgba(15, 23, 42, 0.8);
+    border-radius: 10px;
+}
+
+.admin-table-wrapper::-webkit-scrollbar-thumb {
+    background: rgba(148, 163, 184, 0.7);
+    border-radius: 10px;
+}
+
+.admin-table-wrapper::-webkit-scrollbar-thumb:hover {
+    background: rgba(209, 213, 219, 0.9);
+}
+
+/* Enhanced table */
+.admin-page .w3-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.95rem;
+}
+
+/* Table rows */
+.admin-page .w3-table tbody tr {
+    background: rgba(15, 23, 42, 0.7);
+    border-bottom: 1px solid rgba(148, 163, 184, 0.15);
+    transition: background 0.2s ease;
+}
+
+.admin-page .w3-table tbody tr:nth-child(even) {
+    background: rgba(15, 23, 42, 0.9);
+}
+
+.admin-page .w3-table tbody tr:hover {
+    background: rgba(79, 70, 229, 0.35);
+}
+
+/* Table cells */
+.admin-page .w3-table tbody td {
+    padding: 0.9rem 1rem;
+    color: #e5e7eb;
+    vertical-align: middle;
+    font-size: 0.9rem;
+}
+
+/* ID column: narrow + centered */
+.admin-page .w3-table tbody td:nth-child(1),
+.admin-page .admin-table-head th:nth-child(1) {
+    width: 70px;
+    text-align: center;
+}
+
+/* Actions column: right aligned */
+.admin-page .w3-table tbody td:nth-child(4),
+.admin-page .admin-table-head th:nth-child(4) {
+    text-align: left;
+    white-space: nowrap;
+}
+
+/* User badge */
+.user-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0.4rem 0.8rem;
+    background: rgba(79, 70, 229, 0.22);
+    border: 1px solid rgba(129, 140, 248, 0.45);
+    border-radius: 8px;
+    font-size: 0.82rem;
+    font-weight: 600;
+    transition: all 0.2s ease;
+}
+
+.user-badge-icon {
+    font-size: 1.1rem;
+}
+
+/* Action buttons */
+.action-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.6rem 1.1rem;
+    font-size: 0.8rem;
+    border-radius: 8px;
+    font-weight: 600;
+    transition: all 0.2s ease;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.action-btn.edit {
+    background: rgba(34, 197, 94, 0.15);
+    border: 1px solid rgba(34, 197, 94, 0.4);
+    color: #86efac;
+}
+
+.action-btn.edit:hover {
+    background: rgba(34, 197, 94, 0.3);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(34, 197, 94, 0.3);
+}
+
+.action-btn.delete {
+    background: rgba(239, 68, 68, 0.15);
+    border: 1px solid rgba(239, 68, 68, 0.4);
+    color: #fca5a5;
+    margin-left: 0.5rem;
+}
+
+.action-btn.delete:hover {
+    background: rgba(239, 68, 68, 0.3);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
+}
+
+/* Empty state */
+.empty-state {
+    text-align: center;
+    padding: 3.5rem 2rem;
+    color: #9ca3af;
+}
+
+.empty-state-icon {
+    font-size: 4.5rem;
+    margin-bottom: 1.2rem;
+    opacity: 0.5;
+}
+
+.empty-state h3 {
+    font-size: 1.3rem;
+    color: #e5e7eb;
+    margin-bottom: 0.6rem;
+    font-weight: 700;
+}
+
+.empty-state p {
+    font-size: 0.95rem;
+}
+
+/* Modal on admin page */
+.admin-page .modal-overlay {
+    background: rgba(15, 23, 42, 0.88);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+}
+
+.admin-page .modal-dialog {
+    background: radial-gradient(circle at 0 0, rgba(30, 64, 175, 0.5), rgba(15, 23, 42, 1));
+    border-radius: 20px;
+    padding: 2.2rem 2.4rem;
+    max-width: 480px;
+    box-shadow:
+        0 30px 70px rgba(15, 23, 42, 0.98),
+        0 0 0 1px rgba(148, 163, 184, 0.4);
+    border: none;
+}
+
+.admin-page .modal-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 1.2rem;
+    color: #f9fafb;
+}
+
+.admin-page .modal-message {
+    margin-bottom: 2rem;
+    font-size: 0.95rem;
+    color: #9ca3af;
+    line-height: 1.6;
+}
+
+.admin-page .modal-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 1rem;
+}
+
+/* Admin footer */
+.admin-page .footer {
+    text-align: center;
+    color: #9ca3af;
+    font-size: 0.8rem;
+    padding: 1.5rem 0;
+    margin-top: 2rem;
+}
+
+/* Accessibility: Focus states */
+.admin-page .admin-sidebar-item:focus-visible,
+.admin-page .admin-btn-outline:focus-visible,
+.admin-page .admin-btn-primary:focus-visible,
+.admin-page .password-toggle-btn:focus-visible,
+.admin-page .modal-dialog button:focus-visible,
+.admin-page .action-btn:focus-visible {
+    outline: 2px solid #f97316;
+    outline-offset: 2px;
+    box-shadow: 0 0 0 3px rgba(249, 115, 22, 0.45);
+}
+
+.admin-page .footer {
+    margin-left: 260px;  /* same as .admin-main margin-left */
+    text-align: center;
+}
+
+
+
+/* Reduce motion */
+@media (prefers-reduced-motion: reduce) {
+    .admin-page * {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition: none !important;
+        scroll-behavior: auto !important;
+    }
+}
+
+/* Admin responsive */
+@media (max-width: 1200px) {
+    .admin-page .admin-grid {
+        flex-direction: column;
+    }
+
+    .admin-page .admin-user-form,
+    .admin-page .admin-user-table {
+        width: 100%;
+    }
+
+    .admin-page .admin-user-table {
+        max-height: 520px;
+    }
+
+    .admin-table-wrapper {
+        max-height: 420px;
+    }
+}
+
+@media (max-width: 768px) {
+    /* Sidebar: stop being fixed, go full width */
+    .admin-page .admin-sidebar {
+        position: static;     /* no longer fixed to the side */
+        width: 100%;
+        top: auto;
+        bottom: auto;
+        left: auto;
+        box-shadow: none;
+    }
+
+    /* Main content: no more left margin */
+    .admin-page .admin-main {
+        margin-left: 0;
+        padding: 1.5rem 1rem;
+    }
+
+    /* Layout wrapper */
+    .admin-page .admin-layout {
+        margin-top: 56px;  /* space for the top bar */
+    }
+
+    /* Footer: center under the content */
+    .admin-page .footer {
+        margin-left: 0 !important;
+        padding: 1.2rem 0 1.8rem;
+        text-align: center;
+    }
+}
+/* Remove the empty space above (and below) the users table */
+.admin-page .admin-table-wrapper .w3-table {
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+/* Center align ONLY the header text for Actions column */
+.admin-page .admin-table-head th:nth-child(4) {
+    text-align: center !important;
+}
+
+/* Center ALL table header labels */
+.admin-page .admin-table-head th {
+    text-align: center !important;
+}
+
+
+
+
+/* Fix password-eye alignment on Admin Page */
+.admin-page .password-wrapper {
+    position: relative;
+}
+
+.admin-page .password-wrapper .password-toggle-btn {
+    right: 1.2rem !important;     /* push slightly inward */
+    top: 50% !important;           /* vertically centered */
+    transform: translateY(-85%) !important;
+    font-size: 1.1rem;             /* balanced icon size */
+    padding: 0;
+    line-height: 1;
+}
+
+.admin-page .footer {
+    margin-left: 260px;   /* same width as sidebar */
+    text-align: center;
+}
+
+/* ========================================
+   STUDENT MANAGEMENT PAGE STYLES
+   Only affects <body class="... students-page">
+   ======================================== */
+
+/* Student Viewer Photo (in left panel) */
+.students-page .student-viewer-photo {
+    width: 160px;
+    height: 160px;
+    border-radius: 50%;
+    overflow: hidden;
+    margin: 0 auto 1.8rem auto;
+    border: 3px solid rgba(129, 140, 248, 0.7);
+    box-shadow: 
+        0 10px 30px rgba(15, 23, 42, 0.8),
+        0 0 0 1px rgba(99, 102, 241, 0.3);
+    background: rgba(15, 23, 42, 0.9);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.students-page .student-viewer-photo::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    background: radial-gradient(circle at 30% 30%, rgba(99, 102, 241, 0.2), transparent 70%);
+    pointer-events: none;
+}
+
+.students-page .student-viewer-photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+/* Student ID Badge */
+.students-page .student-id-badge {
+    display: inline-block;
+    padding: 0.4rem 0.9rem;
+    background: rgba(79, 70, 229, 0.25);
+    border: 1px solid rgba(129, 140, 248, 0.5);
+    border-radius: 8px;
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: #c7d2fe;
+    letter-spacing: 0.05em;
+    font-family: monospace;
+}
+
+/* Course Badge */
+.students-page .course-badge {
+    display: inline-block;
+    padding: 0.35rem 0.85rem;
+    background: rgba(34, 197, 94, 0.2);
+    border: 1px solid rgba(34, 197, 94, 0.45);
+    border-radius: 8px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: #86efac;
+    letter-spacing: 0.04em;
+}
+
+/* Level Badge */
+.students-page .level-badge {
+    display: inline-block;
+    padding: 0.35rem 0.75rem;
+    background: rgba(249, 115, 22, 0.2);
+    border: 1px solid rgba(249, 115, 22, 0.45);
+    border-radius: 8px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: #fdba74;
+    min-width: 42px;
+}
+
+/* View Button (new action button variant) */
+.students-page .action-btn.view {
+    background: rgba(96, 165, 250, 0.15);
+    border: 1px solid rgba(96, 165, 250, 0.4);
+    color: #93c5fd;
+}
+
+.students-page .action-btn.view:hover {
+    background: rgba(96, 165, 250, 0.3);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(96, 165, 250, 0.3);
+}
+
+/* Adjust table column widths for STUDENT page only */
+.students-page .w3-table tbody td:nth-child(1),
+.students-page .admin-table-head th:nth-child(1) {
+    width: 60px;
+    text-align: center;
+}
+
+.students-page .w3-table tbody td:nth-child(2),
+.students-page .admin-table-head th:nth-child(2) {
+    width: 130px;
+}
+
+.students-page .w3-table tbody td:nth-child(6),
+.students-page .admin-table-head th:nth-child(6) {
+    width: 90px;
+    text-align: center;
+}
+
+/* ===================================================
+   FIXED ACTION BUTTON LAYOUT (organized + aligned)
+   =================================================== */
+.students-page .w3-table tbody td:nth-child(7),
+.students-page .admin-table-head th:nth-child(7) {
+    min-width: 220px;
+    text-align: center;
+}
+
+/* Make buttons align in a row properly */
+.students-page .w3-table tbody td:nth-child(7) {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.5rem 0.25rem;
+}
+
+.students-page .action-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.3rem;
+    white-space: nowrap;
+}
+
+/* Responsive adjustments for student table */
+@media (max-width: 1200px) {
+    .students-page .student-viewer-photo {
+        width: 140px;
+        height: 140px;
+    }
+
+    .students-page .w3-table {
+        font-size: 0.85rem;
+    }
+
+    .students-page .student-id-badge,
+    .students-page .course-badge,
+    .students-page .level-badge {
+        font-size: 0.75rem;
+        padding: 0.3rem 0.7rem;
+    }
+}
+
+/* ============================================
+   MOBILE — stack action buttons vertically
+   ============================================ */
+@media (max-width: 768px) {
+    .students-page .student-viewer-photo {
+        width: 120px;
+        height: 120px;
+    }
+
+    .students-page .w3-table tbody td:nth-child(7) {
+        flex-direction: column;
+    }
+
+    .students-page .w3-table tbody td:nth-child(7) .action-btn {
+        display: block;
+        margin: 0.3rem auto;
+        width: 100%;
+        max-width: 140px;
+    }
+}
+
+
+
+
+/* ============================================================
+   ADMIN PAGE — NO SIDEBAR LAYOUT (STUDENT FORM)
+   ============================================================ */
+
+/* Wrapper when we're not using the left sidebar */
+.admin-page .admin-layout.no-sidebar {
+    display: block;
+    min-height: calc(100vh - 56px);
+    margin-top: 56px; /* space for top bar */
+}
+
+/* Full-width main content centered */
+.admin-page .admin-main.full-width {
+    margin-left: 0;                 /* override 260px margin */
+    max-width: 1200px;              /* same as panel */
+    margin-right: auto;
+    margin-left: auto;
+    padding: 1.5rem 2rem 2.5rem;
+    font-size: 0.95rem;
+    line-height: 1.6;
+}
+
+/* Center the form panel inside full-width admin-main */
+.admin-page .student-form-panel {
+    max-width: 1200px;
+    margin: 0 auto 2.5rem;
+}
+
+/* Footer should NOT be pushed right when there is no sidebar */
+.admin-page .admin-layout.no-sidebar + .footer {
+    margin-left: 0 !important;
+}
+/* ============================================================
+   ENHANCED STUDENT FORM STYLES — CAMERA + FORM
+   ============================================================ */
+
+/* Camera Section Layout */
+.student-camera-section {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* always 2 equal columns */
+    gap: 2rem;
+    margin-bottom: 2.5rem;
+    justify-items: stretch;  /* columns fill full grid width */
+    align-items: start;
+}
+
+/* Column wrapper */
+.student-camera-col {
+    width: 100%;
+    max-width: none; /* each column fills its 1fr track */
+    display: flex;
+    flex-direction: column;
+}
+
+/* Camera Header */
+.camera-header {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: #e5e7eb;
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid rgba(148, 163, 184, 0.25);
+}
+
+.camera-icon {
+    font-size: 1.2rem;
+}
+
+/* Camera Box + Captured Photo Box (same look & size) */
+.camera-box-modern,
+.photo-result-box-modern {
+    width: 100%;
+    max-width: 480px;        /* <- controls width (you can adjust) */
+    aspect-ratio: 4 / 3;     /* <- keeps natural webcam shape */
+    height: auto;            /* height adjusts automatically */
+    margin: 0 auto;          /* center the box */
+
+    border: 2px solid rgba(148, 163, 184, 0.35);
+    border-radius: 16px;
+    background: rgba(15, 23, 42, 0.85);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    box-shadow: inset 0 2px 20px rgba(0, 0, 0, 0.4);
+    padding: 0;
+}
+
+/* Ensure video, canvas & captured image fill perfectly */
+.camera-box-modern video,
+.camera-box-modern canvas,
+.photo-result-box-modern img {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover;
+    display: block;
+}
+
+/* Make the viewer inside fill the box */
+#camera-viewer {
+    width: 100%;
+    height: 100%;
+}
+
+/* Webcam video or canvas fills perfectly */
+#camera-viewer video,
+#camera-viewer canvas {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: contain !important;   /* zoom OUT instead of zoom in */
+    background-color: black;          /* fills empty edges (optional) */
+    display: block;
+}
+
+
+/* Camera Placeholder */
+.camera-placeholder {
+    font-size: 0.9rem;
+    color: #6b7280;
+    text-align: center;
+}
+
+/* Capture Button */
+.camera-capture-btn {
+    margin-top: 1.2rem;
+    padding: 0.9rem 2rem;
+    background: radial-gradient(circle at 0 0, #22c55e, #16a34a);
+    border: none;
+    color: white;
+    font-size: 0.95rem;
+    font-weight: 600;
+    border-radius: 12px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    box-shadow: 0 12px 28px rgba(34, 197, 94, 0.45);
+    transition: 0.2s ease;
+
+    width: 60%;
+    max-width: 360px;
+    align-self: center; /* centered under camera box */
+}
+
+.camera-capture-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 16px 35px rgba(34, 197, 94, 0.65);
+}
+
+/* Student Information Section */
+.student-info-section {
+    margin-bottom: 2.5rem;
+}
+
+.section-subtitle {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: #f9fafb;
+    margin-bottom: 1.4rem;
+    padding-bottom: 0.7rem;
+    border-bottom: 2px solid rgba(148, 163, 184, 0.25);
+}
+
+/* Two-column form */
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 2rem;
+}
+
+.form-col {
+    display: flex;
+    flex-direction: column;
+}
+
+/* QR Code Section */
+.qr-code-section {
+    margin-bottom: 2.5rem;
+    text-align: center;
+}
+
+.qr-box-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 1.2rem;
+}
+
+.qr-box-modern {
+    width: 240px;
+    height: 240px;
+    background: white;
+    border-radius: 16px;
+    border: 2px solid rgba(148, 163, 184, 0.4);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 10px 30px rgba(15, 23, 42, 0.55);
+    padding: 1rem;
+}
+
+/* Form Buttons */
+.student-form-actions {
+    display: flex;
+    justify-content: space-between;
+    gap: 1.5rem;
+    margin-top: 2.5rem;
+    padding-top: 2rem;
+    border-top: 2px solid rgba(148, 163, 184, 0.18);
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+    .student-camera-section {
+        grid-template-columns: 1fr;
+    }
+
+    .camera-box-modern,
+    .photo-result-box-modern {
+        height: 260px;
+    }
+}
+
+@media (max-width: 600px) {
+    .camera-capture-btn {
+        width: 100%;
+        max-width: none;
+    }
+
+    .student-form-actions {
+        flex-direction: column;
+        
+    }
+
+    .admin-btn-outline {
+        text-align: center !important;
+    }
+
+}
+
+/* ========================================
+   STUDENT MANAGEMENT PAGE - TABLE HEIGHT PERFECT MATCH
+   ======================================== */
+
+/* Make the table wrapper match form perfectly */
+.students-page .admin-table-wrapper {
+    height: 659px !important; /* Added another 3px (total +9px from 650px) */
+    min-height: 659px !important;
+    max-height: 659px !important;
+    overflow-y: auto !important;
+}
+
+/* Make table rows comfortable height */
+.students-page .w3-table tbody tr {
+    height: 60px !important;
+}
+
+/* Good padding for readability */
+.students-page .w3-table td {
+    padding: 14px 10px !important;
+    vertical-align: middle !important;
+}
+
+/* Header row */
+.students-page .w3-table th {
+    padding: 16px 10px !important;
+    background-color: #020617 !important;
+}
+
+/* Don't affect admin page */
+.admin-page:not(.students-page) .admin-table-wrapper {
+    max-height: calc(100vh - 360px) !important;
+    height: auto !important;
+}
+
+/* ========================================
+   STUDENT MANAGEMENT PAGE - MOBILE FIX
+   ======================================== */
+
+@media (max-width: 768px) {
+    /* Reduce height for mobile */
+    .students-page .admin-table-wrapper {
+        height: 400px !important;
+        min-height: 400px !important;
+        max-height: 400px !important;
+    }
+    
+    /* Make table container responsive */
+    .students-page .admin-table-wrapper {
+        overflow-x: auto !important;
+        -webkit-overflow-scrolling: touch !important;
+    }
+    
+    /* Make table fit mobile screen */
+    .students-page .w3-table {
+        min-width: 700px; /* Minimum width to show all columns */
+    }
+    
+    /* Reduce row height for mobile */
+    .students-page .w3-table tbody tr {
+        height: 45px !important;
+    }
+    
+    /* Reduce padding for mobile */
+    .students-page .w3-table td,
+    .students-page .w3-table th {
+        padding: 8px 6px !important;
+    }
+    
+    /* Stack action buttons vertically on mobile */
+    .students-page .w3-table tbody td:nth-child(7) {
+        flex-direction: column;
+        gap: 4px;
+        min-width: 120px;
+    }
+    
+    .students-page .action-btn {
+        width: 100%;
+        padding: 6px 8px;
+        font-size: 12px;
+    }
+}
+
+

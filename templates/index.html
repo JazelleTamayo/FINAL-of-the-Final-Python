@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>QR Reader | Attendance System</title>
+
+    <!-- W3CSS framework -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/w3.css') }}">
+    <!-- Your custom styles -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+
+    <!-- QR scanner library -->
+    <script src="{{ url_for('static', filename='js/html5-qrcode.min.js') }}"></script>
+</head>
+
+<body class="page-body index-page">
+
+    <!-- Animated Background Particles -->
+    <div class="bg-particles">
+        <div class="particle" style="width: 80px; height: 80px; left: 10%; top: 20%; animation-delay: 0s;"></div>
+        <div class="particle" style="width: 60px; height: 60px; left: 80%; top: 30%; animation-delay: 2s;"></div>
+        <div class="particle" style="width: 100px; height: 100px; left: 50%; top: 60%; animation-delay: 4s;"></div>
+        <div class="particle" style="width: 70px; height: 70px; left: 20%; top: 70%; animation-delay: 6s;"></div>
+        <div class="particle" style="width: 90px; height: 90px; left: 70%; top: 80%; animation-delay: 8s;"></div>
+    </div>
+
+    <!-- TOP BAR -->
+    <header class="top-bar">
+        <div class="brand-section">
+            <div class="brand-icon">📱</div>
+            <div class="course-info">
+                <div class="course-title">PYTHON (19877) 8:00 - 10:30 MW</div>
+                <div class="course-subtitle">Smart Attendance System</div>
+            </div>
+        </div>
+        <a href="{{ url_for('login') }}" class="login-btn">LOGIN</a>
+    </header>
+
+    <!-- MAIN CONTENT -->
+    <main class="main-container">
+
+        <!-- FLASH MESSAGES -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+        <div class="flash-messages">
+            {% for category, message in messages %}
+            <div class="flash-message flash-{{ category }}">{{ message }}</div>
+            {% endfor %}
+        </div>
+        {% endif %}
+        {% endwith %}
+        <!-- END FLASH -->
+
+        <!-- HEADER SECTION -->
+        <div class="scanner-header">
+            <h1>QR Code Attendance Scanner</h1>
+            <p>Position the QR code within the frame to mark attendance</p>
+        </div>
+
+        <!-- SCANNER CARD -->
+        <div class="scanner-card">
+            <!-- QR Scanner Box with Overlay -->
+            <div class="qr-box">
+                <div id="qr-reader"></div>
+                <div class="scan-overlay">
+                    <div class="scan-line"></div>
+                    <div class="corner-bracket top-left"></div>
+                    <div class="corner-bracket top-right"></div>
+                    <div class="corner-bracket bottom-left"></div>
+                    <div class="corner-bracket bottom-right"></div>
+                </div>
+            </div>
+
+            <!-- Status Indicator -->
+            <div class="status-section">
+                <div class="scanner-status">
+                    <span class="status-dot"></span>
+                    <span id="scanner-status-text">Initializing camera...</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- INFO CARDS -->
+        <div class="info-grid">
+            <div class="info-card">
+                <div class="info-card-icon">🎯</div>
+                <h3>Quick & Accurate</h3>
+                <p>Instant QR code recognition with high accuracy for seamless attendance tracking.</p>
+            </div>
+            <div class="info-card">
+                <div class="info-card-icon">🔒</div>
+                <h3>Secure System</h3>
+                <p>Your data is protected with enterprise-grade security measures.</p>
+            </div>
+            <div class="info-card">
+                <div class="info-card-icon">📊</div>
+                <h3>Real-time Updates</h3>
+                <p>Attendance records are updated instantly and available for review.</p>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- SUCCESS MODAL -->
+    <div id="scan-modal" class="modal-overlay">
+        <div class="modal-dialog">
+            <h3 class="modal-title">✓ Attendance Recorded</h3>
+	
+            <div class="scan-modal-body">
+                <div class="scan-photo-wrapper">
+                    <img id="scan-photo" alt="Student photo" style="display:none;">
+                </div>
+
+                <div class="scan-fields">
+                    <div class="scan-row"><span class="scan-label">ID Number</span><span class="scan-value" id="scan-idno"></span></div>
+                    <div class="scan-row"><span class="scan-label">Last Name</span><span class="scan-value" id="scan-last-name"></span></div>
+                    <div class="scan-row"><span class="scan-label">First Name</span><span class="scan-value" id="scan-first-name"></span></div>
+                    <div class="scan-row"><span class="scan-label">Course</span><span class="scan-value" id="scan-course"></span></div>
+                    <div class="scan-row"><span class="scan-label">Level</span><span class="scan-value" id="scan-level"></span></div>
+                </div>
+            </div>
+
+            <p class="scan-note">This window will close automatically in 3 seconds.</p>
+        </div>
+    </div>
+
+    <!-- ERROR MODAL -->
+    <div id="scan-error-modal" class="modal-overlay">
+        <div class="modal-dialog">
+            <h3 class="modal-title">⚠️ Scan Error</h3>
+            <p id="scan-error-text" class="modal-message"></p>
+
+            <div class="modal-actions">
+                <button type="button" id="scan-error-close" class="admin-btn-outline">OK</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        © 2025 Jazelle R. Tamayo &amp; John Carlo D.Sermonia | Smart Attendance System
+    </footer>
+
+    <!-- JS -->
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+
+</html>

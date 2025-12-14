@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Attendance Records | Attendance System</title>
+
+    <!-- W3CSS -->
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+
+    <!-- Shared CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+<body class="page-body admin-page attendance-page">
+
+    <!-- Animated Background Particles -->
+    <div class="bg-particles">
+        <div class="particle" style="width: 80px; height: 80px; left: 10%; top: 20%; animation-delay: 0s;"></div>
+        <div class="particle" style="width: 60px; height: 60px; left: 80%; top: 30%; animation-delay: 2s;"></div>
+        <div class="particle" style="width: 100px; height: 100px; left: 50%; top: 60%; animation-delay: 4s;"></div>
+        <div class="particle" style="width: 70px; height: 70px; left: 20%; top: 70%; animation-delay: 6s;"></div>
+        <div class="particle" style="width: 90px; height: 90px; left: 70%; top: 80%; animation-delay: 8s;"></div>
+    </div>
+
+    <!-- TOP BAR -->
+    <header class="top-bar">
+        <div class="brand-section">
+            <div class="brand-icon">📱</div>
+            <div class="course-info">
+                <div class="course-title">PYTHON (19877) 8:00 - 10:30 MW</div>
+                <div class="course-subtitle">Admin Dashboard</div>
+            </div>
+        </div>
+    </header>
+
+    <!-- ADMIN LAYOUT -->
+    <div class="admin-layout">
+
+        <!-- LEFT SIDEBAR -->
+        <aside class="admin-sidebar" aria-label="Admin navigation">
+            <a href="{{ url_for('admin') }}" class="admin-sidebar-item">
+                <span class="sidebar-icon">👥</span>
+                <span>User Management</span>
+            </a>
+            <a href="{{ url_for('students') }}" class="admin-sidebar-item">
+                <span class="sidebar-icon">🎓</span>
+                <span>Student Management</span>
+            </a>
+            <a href="{{ url_for('attendance') }}" class="admin-sidebar-item active" aria-current="page">
+                <span class="sidebar-icon">📋</span>
+                <span>Attendance</span>
+            </a>
+            <a href="{{ url_for('logout') }}" class="admin-sidebar-item">
+                <span class="sidebar-icon">🚪</span>
+                <span>Log Out</span>
+            </a>
+        </aside>
+
+        <!-- MAIN CONTENT -->
+        <main class="admin-main" role="main">
+
+            <!-- PAGE HEADER -->
+            <header class="admin-main-header">
+                <h1 class="admin-section-title">Attendance Records</h1>
+            </header>
+
+            <!-- Flash Messages -->
+            {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+            <div class="flash-messages" aria-live="polite">
+                {% for category, message in messages %}
+                <div class="flash-message flash-{{ category }}">{{ message }}</div>
+                {% endfor %}
+            </div>
+            {% endif %}
+            {% endwith %}
+
+            <!-- ATTENDANCE PANEL -->
+            <section class="admin-panel attendance-panel">
+
+                <!-- Panel Header with Stats and Date Filter -->
+                <div class="attendance-panel-header">
+                    <div class="attendance-header-left">
+                        <h2 class="admin-panel-title">
+                            <span>📅</span>
+                            Daily Attendance
+                        </h2>
+                        <p class="attendance-date-display">
+                            Showing records for: <strong>{{ selected_date }}</strong>
+                        </p>
+
+                        <!-- Stats Cards (Horizontal) -->
+                        <div class="attendance-stats-horizontal">
+                            <div class="attendance-stat-card-compact">
+                                <div class="stat-icon">✅</div>
+                                <div class="stat-content">
+                                    <div class="stat-label">Total Present</div>
+                                    <div class="stat-value">{{ records|length if records else 0 }}</div>
+                                </div>
+                            </div>
+
+                            <div class="attendance-stat-card-compact">
+                                <div class="stat-icon">⏰</div>
+                                <div class="stat-content">
+                                    <div class="stat-label">First Check-In</div>
+                                    <div class="stat-value">
+                                        {% if records %}
+                                            {{ records[0].time_in }}
+                                        {% else %}
+                                            --:--
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="attendance-stat-card-compact">
+                                <div class="stat-icon">🕐</div>
+                                <div class="stat-content">
+                                    <div class="stat-label">Last Check-In</div>
+                                    <div class="stat-value">
+                                        {% if records %}
+                                            {{ records[-1].time_in }}
+                                        {% else %}
+                                            --:--
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Date Filter Form -->
+                    <form method="get" action="{{ url_for('attendance') }}" class="attendance-date-form">
+                        <div class="date-input-wrapper">
+                            <span class="date-icon">📆</span>
+                            <input 
+                                type="date" 
+                                name="date" 
+                                value="{{ selected_date }}"
+                                class="attendance-date-input"
+                                required
+                            >
+                        </div>
+                        <button type="submit" class="admin-btn-primary attendance-submit-btn">
+                            <span>🔍</span>
+                               GO
+                        </button>
+                    </form>
+                </div>
+
+                <!-- Attendance Table -->
+                <div class="admin-table-wrapper attendance-table-container">
+                    {% if records %}
+                    <table class="w3-table w3-bordered attendance-table">
+                        <thead class="admin-table-head">
+                            <tr>
+                                <th scope="col">ID</th>
+                                <th scope="col">Time In</th>
+                                <th scope="col">ID Number</th>
+                                <th scope="col">Name</th>
+                                <th scope="col">Course / Level</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for rec in records %}
+                            <tr class="attendance-row">
+                                <td class="attendance-index">
+                                    {{ loop.index }}
+                                </td>
+                                <td>
+                                    <div class="time-badge">
+                                        <span class="time-icon">🕐</span>
+                                        {{ rec.time_in }}
+                                    </div>
+                                </td>
+                                <td>
+                                    <span class="student-id-badge">{{ rec.student_id }}</span>
+                                </td>
+                                <td class="student-name">
+                                    {{ rec.name }}
+                                </td>
+                                <td>
+									<div class="course-level-group">
+                                        <span class="course-badge">{{ rec.course_level if rec.course_level else 'N/A' }}</span>
+                                    </div>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                    {% else %}
+                    <div class="empty-state">
+                        <div class="empty-state-icon">📋</div>
+                        <h3>No Attendance Records</h3>
+                        <p>No students have checked in on {{ selected_date }}.</p>
+                        <p class="empty-state-hint">Try selecting a different date or wait for students to scan their QR codes.</p>
+                    </div>
+                    {% endif %}
+                </div>
+
+            </section>
+
+        </main>
+
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        © 2025 Jazelle R. Tamayo &amp; John Carlo D.Sermonia | Smart Attendance System
+    </footer>
+
+    <!-- JS -->
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+
+    <style>
+        /* ===================================================
+           ATTENDANCE PAGE SPECIFIC STYLES
+           =================================================== */
+        
+        /* Panel Header Layout */
+        .attendance-panel-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 2rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 2px solid rgba(148, 163, 184, 0.25);
+            gap: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .attendance-header-left {
+            flex: 1;
+            min-width: 320px;
+        }
+
+        .attendance-header-left .admin-panel-title {
+            margin-bottom: 0.8rem;
+            padding-bottom: 0;
+            border-bottom: none;
+        }
+
+        .attendance-date-display {
+            font-size: 0.9rem;
+            color: #9ca3af;
+            margin: 0 0 1.5rem 0;
+        }
+
+        .attendance-date-display strong {
+            color: #e5e7eb;
+            font-weight: 600;
+        }
+
+        /* Horizontal Stats Layout (Left Side) */
+        .attendance-stats-horizontal {
+            display: flex;
+            flex-direction: column;
+            gap: 0.8rem;
+        }
+
+        .attendance-stat-card-compact {
+            background: radial-gradient(circle at 0 0, rgba(79, 70, 229, 0.15), rgba(15, 23, 42, 0.95));
+            border: 1px solid rgba(148, 163, 184, 0.3);
+            border-radius: 12px;
+            padding: 0.9rem 1.1rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            transition: all 0.25s ease;
+            box-shadow: 0 3px 10px rgba(15, 23, 42, 0.5);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .attendance-stat-card-compact::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, #22c55e, #eab308, #6366f1);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .attendance-stat-card-compact:hover {
+            transform: translateX(4px);
+            box-shadow: 0 6px 18px rgba(79, 70, 229, 0.4);
+            border-color: rgba(129, 140, 248, 0.6);
+        }
+
+        .attendance-stat-card-compact:hover::before {
+            opacity: 1;
+        }
+
+        .attendance-stat-card-compact .stat-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.3rem;
+            background: radial-gradient(circle at 0 0, #22c55e, #16a34a);
+            box-shadow: 0 3px 10px rgba(34, 197, 94, 0.4);
+            flex-shrink: 0;
+        }
+
+        .attendance-stat-card-compact:nth-child(2) .stat-icon {
+            background: radial-gradient(circle at 0 0, #6366f1, #4f46e5);
+            box-shadow: 0 3px 10px rgba(99, 102, 241, 0.4);
+        }
+
+        .attendance-stat-card-compact:nth-child(3) .stat-icon {
+            background: radial-gradient(circle at 0 0, #f97316, #ea580c);
+            box-shadow: 0 3px 10px rgba(249, 115, 22, 0.4);
+        }
+
+        .attendance-stat-card-compact .stat-content {
+            flex: 1;
+        }
+
+        .attendance-stat-card-compact .stat-label {
+            font-size: 0.7rem;
+            color: #9ca3af;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            font-weight: 600;
+            margin-bottom: 0.35rem;
+        }
+
+        .attendance-stat-card-compact .stat-value {
+            font-size: 1.35rem;
+            font-weight: 700;
+            color: #f9fafb;
+            line-height: 1;
+        }
+
+        /* Date Filter Form */
+        .attendance-date-form {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .date-input-wrapper {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .date-icon {
+            position: absolute;
+            left: 1rem;
+            font-size: 1.1rem;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .attendance-date-input {
+            padding: 0.85rem 1rem 0.85rem 3rem;
+            border-radius: 10px;
+            border: 1px solid rgba(148, 163, 184, 0.45);
+            background: rgba(15, 23, 42, 0.85);
+            color: #f9fafb;
+            font-size: 0.95rem;
+            font-weight: 600;
+            min-width: 180px;
+            transition: all 0.2s ease;
+            cursor: pointer;
+        }
+
+        .attendance-date-input:focus {
+            border-color: #6366f1;
+            background: rgba(15, 23, 42, 0.96);
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.25);
+            outline: none;
+        }
+
+        .attendance-date-input::-webkit-calendar-picker-indicator {
+            cursor: pointer;
+            filter: invert(1);
+            opacity: 0.7;
+        }
+
+        .attendance-submit-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.85rem 1.8rem;
+            white-space: nowrap;
+        }
+
+
+
+        /* Table Container */
+        .attendance-table-container {
+            max-height: calc(100vh - 480px);
+            min-height: 300px;
+        }
+
+        /* Table Styling */
+        .attendance-table {
+            font-size: 0.95rem;
+        }
+
+        .attendance-row {
+            transition: all 0.2s ease;
+        }
+
+        .attendance-row:hover {
+            background: rgba(79, 70, 229, 0.35) !important;
+            transform: scale(1.01);
+        }
+
+        .attendance-index {
+            font-weight: 700;
+            color: #9ca3af;
+            text-align: center;
+            width: 70px;
+        }
+
+        /* Time Badge */
+        .time-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.45rem 0.9rem;
+            background: rgba(96, 165, 250, 0.2);
+            border: 1px solid rgba(96, 165, 250, 0.4);
+            border-radius: 8px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: #93c5fd;
+            font-family: monospace;
+        }
+
+        .time-icon {
+            font-size: 1rem;
+        }
+
+        /* Student Name */
+        .student-name {
+            font-weight: 600;
+            color: #f9fafb;
+            font-size: 0.95rem;
+        }
+
+        /* Course/Level Group */
+        .course-level-group {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1024px) {
+            .attendance-panel-header {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .attendance-date-form {
+                flex-wrap: wrap;
+            }
+
+            .attendance-stats-horizontal {
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+                gap: 0.8rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .attendance-date-form {
+                flex-direction: column;
+                width: 100%;
+            }
+
+            .date-input-wrapper,
+            .attendance-submit-btn {
+                width: 100%;
+            }
+
+            .attendance-date-input {
+                width: 100%;
+            }
+
+            .attendance-table {
+                font-size: 0.85rem;
+            }
+
+            .time-badge {
+                font-size: 0.8rem;
+                padding: 0.35rem 0.7rem;
+            }
+
+            .course-level-group {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 0.4rem;
+            }
+        }
+
+        /* Empty State Enhancement */
+        .attendance-page .empty-state {
+            padding: 4rem 2rem;
+        }
+
+        .attendance-page .empty-state-icon {
+            font-size: 5rem;
+            margin-bottom: 1.5rem;
+            opacity: 0.4;
+        }
+
+        .attendance-page .empty-state h3 {
+            font-size: 1.5rem;
+            margin-bottom: 0.8rem;
+        }
+
+        .attendance-page .empty-state p {
+            font-size: 1rem;
+            color: #9ca3af;
+            margin-bottom: 0.5rem;
+        }
+
+        .empty-state-hint {
+            font-size: 0.9rem !important;
+            color: #6b7280 !important;
+            font-style: italic;
+            margin-top: 1rem !important;
+        }
+    </style>
+</body>
+
+</html>

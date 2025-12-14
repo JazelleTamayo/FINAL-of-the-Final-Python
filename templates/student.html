@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Form | Attendance System</title>
+
+    <!-- W3CSS -->
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <!-- Shared CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+<body class="page-body admin-page">
+
+    <!-- Animated Background Particles -->
+    <div class="bg-particles">
+        <div class="particle" style="width: 80px; height: 80px; left: 10%; top: 20%; animation-delay: 0s;"></div>
+        <div class="particle" style="width: 60px; height: 60px; left: 80%; top: 30%; animation-delay: 2s;"></div>
+        <div class="particle" style="width: 100px; height: 100px; left: 50%; top: 60%; animation-delay: 4s;"></div>
+        <div class="particle" style="width: 70px; height: 70px; left: 20%; top: 70%; animation-delay: 6s;"></div>
+        <div class="particle" style="width: 90px; height: 90px; left: 70%; top: 80%; animation-delay: 8s;"></div>
+    </div>
+
+    <!-- TOP BAR -->
+    <header class="top-bar">
+        <div class="brand-section">
+            <div class="brand-icon">📱</div>
+            <div class="course-info">
+                <div class="course-title">PYTHON (19877) 8:00 - 10:30 MW</div>
+                <div class="course-subtitle">Student Form</div>
+            </div>
+        </div>
+        <a href="{{ url_for('students') }}" class="login-btn">← BACK</a>
+    </header>
+
+    <!-- MAIN CONTENT (NO SIDEBAR) -->
+    <div class="admin-layout no-sidebar">
+        <main class="admin-main full-width">
+
+            <!-- Flash messages -->
+            {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+            <div class="flash-messages">
+                {% for category, message in messages %}
+                <div class="flash-message flash-{{ category }}">{{ message }}</div>
+                {% endfor %}
+            </div>
+            {% endif %}
+            {% endwith %}
+
+            <!-- Page Title -->
+            <h3 class="admin-section-title">
+                {% if student %}
+                <span>✏️</span> Edit Student
+                {% else %}
+                <span>➕</span> Add New Student
+                {% endif %}
+            </h3>
+
+            <!-- FORM PANEL -->
+            <section class="admin-panel student-form-panel">
+                <form method="post">
+                    <input type="hidden" name="photo_data" id="photo-data-input">
+
+                    <!-- CAMERA + RESULT ROW -->
+                    <div class="student-camera-section">
+
+                        <!-- CAMERA -->
+                        <div class="student-camera-col">
+                            <div class="camera-header">
+                                <span class="camera-icon">📷</span>
+                                <span>Camera Viewer</span>
+                            </div>
+                            <div class="camera-box-modern">
+                                <div id="camera-viewer">
+                                    <span class="camera-placeholder">Camera preview</span>
+                                </div>
+                            </div>
+
+                            <button type="button" class="camera-capture-btn" id="capture-btn">
+                                <span>📸</span>
+                                Capture Photo
+                            </button>
+                        </div>
+
+                        <!-- RESULT -->
+                        <div class="student-camera-col">
+                            <div class="camera-header">
+                                <span class="camera-icon">🖼️</span>
+                                <span>Captured Photo</span>
+                            </div>
+                            <div class="photo-result-box-modern">
+                                <img id="photo-result" alt="Captured photo" style="display:none;">
+                                <span id="photo-placeholder" class="camera-placeholder">
+                                    No photo captured yet
+                                </span>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <!-- STUDENT INFORMATION -->
+                    <div class="student-info-section">
+                        <h4 class="section-subtitle">
+                            <span>📝</span>
+                            Student Information
+                        </h4>
+
+                        <div class="form-grid">
+                            <div class="form-col">
+                                <label class="admin-form-label">ID Number</label>
+                                <input class="w3-input w3-border admin-form-input" type="text" name="student_id"
+                                    placeholder="Enter student ID" required
+                                    value="{{ student.student_id if student else '' }}">
+
+                                <label class="admin-form-label">Last Name</label>
+                                <input class="w3-input w3-border admin-form-input" type="text" name="last_name"
+                                    placeholder="Enter last name" required
+                                    value="{{ student.last_name if student else '' }}">
+
+                                <label class="admin-form-label">First Name</label>
+                                <input class="w3-input w3-border admin-form-input" type="text" name="first_name"
+                                    placeholder="Enter first name" required
+                                    value="{{ student.first_name if student else '' }}">
+                            </div>
+
+                            <div class="form-col">
+                                <label class="admin-form-label">Course</label>
+                                <select class="w3-input w3-border admin-form-input" name="course" required>
+                                    <option value="" disabled {% if not student %}selected{% endif %}>Select Course
+                                    </option>
+                                    <option value="BSIT" {% if student and student.course=="BSIT" %}selected{% endif %}>
+                                        BSIT</option>
+                                    <option value="BSCS" {% if student and student.course=="BSCS" %}selected{% endif %}>
+                                        BSCS</option>
+                                    <option value="BSHM" {% if student and student.course=="BSHM" %}selected{% endif %}>
+                                        BSHM</option>
+                                    <option value="BSTM" {% if student and student.course=="BSTM" %}selected{% endif %}>
+                                        BSTM</option>
+                                    <option value="BSED" {% if student and student.course=="BSED" %}selected{% endif %}>
+                                        BSED</option>
+                                </select>
+
+                                <label class="admin-form-label">Year Level</label>
+                                <select class="w3-input w3-border admin-form-input" name="level" required>
+                                    <option value="" disabled {% if not student %}selected{% endif %}>Select Level
+                                    </option>
+                                    <option value="1" {% if student and student.level=="1" %}selected{% endif %}>1st
+                                        Year</option>
+                                    <option value="2" {% if student and student.level=="2" %}selected{% endif %}>2nd
+                                        Year</option>
+                                    <option value="3" {% if student and student.level=="3" %}selected{% endif %}>3rd
+                                        Year</option>
+                                    <option value="4" {% if student and student.level=="4" %}selected{% endif %}>4th
+                                        Year</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- QR CODE SECTION -->
+                    <div class="qr-code-section">
+                        <h4 class="section-subtitle">
+                            <span>🔲</span>
+                            QR Code (Auto-generated from ID)
+                        </h4>
+                        <div class="qr-box-container">
+                            <div id="qrcode-box" class="qr-box-modern"></div>
+                        </div>
+                    </div>
+
+                    <!-- ACTION BUTTONS -->
+                    <div class="student-form-actions">
+                        <a href="{{ url_for('students') }}" class="admin-btn-outline">
+                            Cancel
+                        </a>
+                        <button type="submit" class="admin-btn-primary">
+                            {% if student %}
+                            Update Student
+                            {% else %}
+                            Save Student
+                            {% endif %}
+                        </button>
+                    </div>
+
+                </form>
+            </section>
+
+        </main>
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        © 2025 Jazelle R. Tamayo &amp; John Carlo D.Sermonia | Smart Attendance System
+    </footer>
+
+    <!-- JS LIBS -->
+    <script src="{{ url_for('static', filename='js/webcam.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/qrcode.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+
+</html>
